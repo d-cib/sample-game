@@ -63,12 +63,19 @@ public class SceneSetup
         playerMat.color = Color.blue;
         player.GetComponent<MeshRenderer>().material = playerMat;
         
+        // Create Enemy Manager
+        GameObject managerObj = new GameObject("EnemyManager");
+        EnemyManager enemyManager = managerObj.AddComponent<EnemyManager>();
+        
         // Create Enemy
         GameObject enemy = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         enemy.name = "Enemy";
         enemy.tag = "Enemy";
         enemy.transform.position = new Vector3(5, 1, 5);
-        enemy.AddComponent<Enemy>();
+        Enemy enemyComponent = enemy.AddComponent<Enemy>();
+        
+        // Register enemy with manager
+        enemyManager.RegisterEnemy(enemyComponent);
         
         // Create Material for enemy
         Material enemyMat = new Material(Shader.Find("Universal Render Pipeline/Lit"));

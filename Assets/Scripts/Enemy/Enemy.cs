@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Simple enemy with health and basic AI
+/// Emits death event for external systems to handle
 /// </summary>
 public class Enemy : MonoBehaviour
 {
@@ -16,9 +18,17 @@ public class Enemy : MonoBehaviour
     public float attackCooldown = 2f;
     public float attackDamage = 10f;
     
+    [Header("Events")]
+    public UnityEvent onDeath = new UnityEvent();
+    
     private Transform player;
     private float attackCooldownTimer;
     private bool isDead;
+    
+    /// <summary>
+    /// Check if enemy is dead
+    /// </summary>
+    public bool IsDead => isDead;
     
     void Start()
     {
@@ -93,8 +103,9 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        // Simple death - destroy after delay
-        Destroy(gameObject, 2f);
+        
+        // Emit death event for external systems to handle
+        onDeath?.Invoke();
     }
     
     public float GetHealthPercent()
