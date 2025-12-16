@@ -26,11 +26,9 @@ GameObject encounterObj = new GameObject("EncounterController");
 EncounterController controller = encounterObj.AddComponent<EncounterController>();
 ```
 
-2. **Register enemies with the controller:**
-```csharp
-Enemy enemy1 = // ... get or create enemy
-controller.RegisterEnemy(enemy1);
-```
+2. **The EncounterController automatically discovers all enemies in the scene during Start().**
+   - No manual registration needed for standard scenes
+   - Enemies are automatically tracked when they spawn
 
 3. **Set up event listeners (optional):**
 In the Unity Inspector:
@@ -83,12 +81,8 @@ Using UnityEvents instead of polling (checking every frame) provides:
 
 ### Adventure Scene
 ```csharp
-// Setup
+// Setup - enemies are auto-discovered
 EncounterController encounter = CreateEncounter();
-foreach (Enemy enemy in adventureEnemies)
-{
-    encounter.RegisterEnemy(enemy);
-}
 
 encounter.OnEncounterComplete.AddListener(() => {
     ShowVictoryScreen();
@@ -98,15 +92,23 @@ encounter.OnEncounterComplete.AddListener(() => {
 
 ### Boss Scene
 ```csharp
-// Setup
+// Setup - boss is auto-discovered
 EncounterController bossEncounter = CreateEncounter();
-bossEncounter.RegisterEnemy(bossEnemy);
 
 bossEncounter.OnEncounterComplete.AddListener(() => {
     PlayVictoryAnimation();
     AwardLoot();
     ReturnToHub();
 });
+```
+
+### Manual Registration (Advanced)
+For dynamic enemy spawning after the encounter starts:
+```csharp
+// Spawn enemy after encounter has started
+Enemy newEnemy = SpawnEnemy();
+encounterController.RegisterEnemy(newEnemy);
+newEnemy.SetEncounterController(encounterController);
 ```
 
 ### Multiple Waves (Future Enhancement)
