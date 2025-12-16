@@ -15,13 +15,7 @@ public class EncounterController : MonoBehaviour
     private bool encounterCompleted = false;
     private bool hasRegisteredEnemies = false;
     
-    void Start()
-    {
-        if (OnEncounterComplete == null)
-        {
-            OnEncounterComplete = new UnityEvent();
-        }
-    }
+
     
     /// <summary>
     /// Register an enemy to be tracked in this encounter
