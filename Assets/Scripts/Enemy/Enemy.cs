@@ -25,7 +25,20 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        encounterController = FindObjectOfType<EncounterController>();
+        
+        // Cache encounter controller if not already set
+        if (encounterController == null)
+        {
+            encounterController = FindObjectOfType<EncounterController>();
+        }
+    }
+    
+    /// <summary>
+    /// Set the encounter controller for this enemy
+    /// </summary>
+    public void SetEncounterController(EncounterController controller)
+    {
+        encounterController = controller;
     }
     
     void Update()

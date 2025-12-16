@@ -83,6 +83,7 @@ public class SceneSetup
         Enemy enemyComponent = enemy.GetComponent<Enemy>();
         if (enemyComponent != null)
         {
+            enemyComponent.SetEncounterController(encounterController);
             encounterController.RegisterEnemy(enemyComponent);
         }
         
