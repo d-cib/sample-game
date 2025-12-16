@@ -25,12 +25,6 @@ public class Enemy : MonoBehaviour
     {
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        
-        // Cache encounter controller if not already set
-        if (encounterController == null)
-        {
-            encounterController = FindObjectOfType<EncounterController>();
-        }
     }
     
     /// <summary>

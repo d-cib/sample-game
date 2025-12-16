@@ -12,6 +12,7 @@ public class DebugDisplay : MonoBehaviour
     
     void OnGUI()
     {
+        // encounterController is optional - it's checked separately below
         if (playerController == null || abilitySystem == null || playerHealth == null)
             return;
             

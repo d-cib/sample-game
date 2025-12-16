@@ -75,17 +75,9 @@ public class SceneSetup
         enemyMat.color = Color.red;
         enemy.GetComponent<MeshRenderer>().material = enemyMat;
         
-        // Create Encounter Controller
+        // Create Encounter Controller (will auto-discover enemies in Start)
         GameObject encounterObj = new GameObject("EncounterController");
         EncounterController encounterController = encounterObj.AddComponent<EncounterController>();
-        
-        // Register enemies with encounter controller
-        Enemy enemyComponent = enemy.GetComponent<Enemy>();
-        if (enemyComponent != null)
-        {
-            enemyComponent.SetEncounterController(encounterController);
-            encounterController.RegisterEnemy(enemyComponent);
-        }
         
         // Create Camera
         GameObject cameraObj = new GameObject("Main Camera");

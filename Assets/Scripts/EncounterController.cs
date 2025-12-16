@@ -11,10 +11,21 @@ public class EncounterController : MonoBehaviour
     [Header("Encounter Events")]
     public UnityEvent OnEncounterComplete;
     
-    private HashSet<Enemy> activeEnemies = new HashSet<Enemy>();
+    private readonly HashSet<Enemy> activeEnemies = new HashSet<Enemy>();
     private bool encounterCompleted = false;
     private bool hasRegisteredEnemies = false;
     
+    void Start()
+    {
+        // Auto-discover and register all enemies in the scene
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            RegisterEnemy(enemy);
+            enemy.SetEncounterController(this);
+        }
+    }
+
 
     
     /// <summary>
@@ -36,8 +47,14 @@ public class EncounterController : MonoBehaviour
     {
         if (encounterCompleted)
             return;
-            
-        activeEnemies.Remove(enemy);
+        
+        // Only process if the enemy was actually registered
+        bool wasRemoved = activeEnemies.Remove(enemy);
+        if (!wasRemoved)
+        {
+            Debug.LogWarning($"OnEnemyDefeated called for unregistered enemy: {enemy.name}");
+            return;
+        }
         
         // Check if encounter is complete (only if we've registered enemies)
         if (hasRegisteredEnemies && activeEnemies.Count == 0)
