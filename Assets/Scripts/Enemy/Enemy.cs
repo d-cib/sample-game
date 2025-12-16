@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     public float maxHealth = 50f;
     private float currentHealth;
     
+    [Header("Boss Settings")]
+    public bool isBoss = false;
+    
     [Header("AI")]
     public float detectionRange = 10f;
     public float attackRange = 2f;
@@ -108,8 +111,14 @@ public class Enemy : MonoBehaviour
             
         isDead = true;
         
-        // Emit death event for external systems to handle
-        onDeath?.Invoke();
+        // Trigger boss defeated event if this is a boss
+        if (isBoss)
+        {
+            GameEvents.TriggerBossDefeated();
+        }
+        
+        // Simple death - destroy after delay
+        Destroy(gameObject, 2f);
     }
     
     public float GetHealthPercent()
