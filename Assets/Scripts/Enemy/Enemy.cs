@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Simple enemy with health and basic AI
+/// Emits death event for external systems to handle
 /// </summary>
 public class Enemy : MonoBehaviour
 {
@@ -19,9 +21,17 @@ public class Enemy : MonoBehaviour
     public float attackCooldown = 2f;
     public float attackDamage = 10f;
     
+    [Header("Events")]
+    public UnityEvent onDeath = new UnityEvent();
+    
     private Transform player;
     private float attackCooldownTimer;
     private bool isDead;
+    
+    /// <summary>
+    /// Check if enemy is dead
+    /// </summary>
+    public bool IsDead => isDead;
     
     void Start()
     {
@@ -95,6 +105,10 @@ public class Enemy : MonoBehaviour
     
     private void Die()
     {
+        // Prevent multiple death events from race conditions
+        if (isDead)
+            return;
+            
         isDead = true;
         
         // Trigger boss defeated event if this is a boss

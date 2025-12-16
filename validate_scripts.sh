@@ -18,6 +18,7 @@ scripts=(
     "Assets/Scripts/Player/PlayerUI.cs"
     "Assets/Scripts/Player/IsometricCamera.cs"
     "Assets/Scripts/Enemy/Enemy.cs"
+    "Assets/Scripts/Enemy/EnemyManager.cs"
     "Assets/Scripts/DebugDisplay.cs"
     "Assets/Editor/SceneSetup.cs"
 )
